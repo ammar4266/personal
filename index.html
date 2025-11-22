@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AmmarSite — Portfolio</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+
+    <div class="bg-layer"></div>
+
+    <!-- header -->
+    <header class="site-header reveal">
+        <div class="brand">
+            <div class="logo">Ammar<span>Site</span></div>
+            <div class="small-tag">Multimedia • Design • 3D Artist</div>
+        </div>
+
+        <nav class="main-nav">
+            <a href="#hero">Home</a>
+            <a href="#about">About</a>
+            <a href="#my-work">My Work</a>
+            <a href="#education">Education</a>
+            <a href="#achievements">Achievements</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="header-actions">
+            <button id="darkModeBtn" aria-label="Toggle dark mode">🌙</button>
+        </div>
+    </header>
+
+    <!-- hero -->
+<section id="hero" class="hero">
+    <div class="hero-inner">
+        <div class="hero-text reveal">
+            <h1>Hi, I'm <span>Muhammad Ammar</span></h1>
+            <p class="hero-lead">Multimedia Student at UTeM — UI/UX, 3D Artist, and Game Developer.</p>
+
+            <div class="hero-cta">
+                <button class="btn primary" onclick="scrollToSection('#my-work')">Explore my work</button>
+                <a class="btn ghost" href="#contact">Contact</a>
+            </div>
+
+            <div class="quick-stats">
+                <div>
+                    <img src="images/utem_logo.png" alt="UTeM Logo" class="edu-logo-large">
+                    <div class="stat">3.71</div>
+                    <div class="label">Current CGPA (UTeM)</div>
+                </div>
+                <div>
+                    <img src="images/kmk_logo.jpg" alt="KMK Logo" class="edu-logo-large">
+                    <div class="stat">3.75</div>
+                    <div class="label">CGPA (KMK)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-card reveal">
+            <div class="photo-wrap">
+                <img src="images/myphoto.png" alt="Ammar Photo">
+            </div>
+            <div class="role">UI/UX, 3D Design, Game Developer, Digital Art</div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- about -->
+    <section id="about" class="section reveal">
+        <div class="container glass">
+            <h2>About Me</h2>
+            <p>
+                <br>
+                I'm <strong>Muhammad Ammar</strong> from Sungai Petani, Kedah. Currently pursuing
+                <strong>Multimedia</strong> at Universiti Teknikal Malaysia Melaka (UTeM). My passion lies in
+                creating interactive 3D experiences, combining animation, modelling, and design principles to craft visually engaging projects.
+            </p>
+
+            <p>
+                I enjoy translating concepts into immersive experiences, whether in Unity prototypes, 3D models, or digital artwork.
+                I believe in thoughtful design, clear communication, and experimenting with innovative ideas that blend functionality with aesthetics.
+            </p>
+
+            <p>
+                Outside academics, I dedicate my time to digital painting, 3D modelling, and creating interactive mini-games. My goal is to become a versatile designer capable of crafting memorable and usable digital experiences.
+            </p>
+
+            <div class="skills-grid">
+                <div class="skill">UI / UX Design</div>
+                <div class="skill">Unity (C#)</div>
+                <div class="skill">3D Artist</div>
+                <div class="skill">Digital Painting</div>
+                <div class="skill">HTML / CSS / JS</div>
+                <div class="skill">Prototyping</div>
+            </div>
+        </div>
+    </section>
+
+   <!-- my work -->
+<section id="my-work" class="section reveal">
+    <h2 class="section-title">My Work</h2>
+    <p>Click on an image to view details.</p>
+
+    <!-- Graphic / Clothing Design -->
+    <h3 class="work-category">Graphic / Clothing Design</h3>
+    <div class="work-grid">
+        <div class="work-card glass">
+            <img src="images/1.jpg" alt="Baju Design 1" class="zoomable">
+            <h4>Baju Design 1</h4>
+        </div>
+        <div class="work-card glass">
+            <img src="images/2.jpg" alt="Baju Design 2" class="zoomable">
+            <h4>Baju Design 2</h4>
+        </div>
+        <div class="work-card glass">
+            <img src="images/3.jpg" alt="Baju Design 3" class="zoomable">
+            <h4>Baju Design 3</h4>
+        </div>
+        <div class="work-card glass">
+            <img src="images/4.jpg" alt="Baju Design 4" class="zoomable">
+            <h4>Baju Design 4</h4>
+        </div>
+    </div>
+
+    <!-- 3D Models / Workshop 2 -->
+    <h3 class="work-category">3D Animation / Modeling</h3>
+    <div class="work-grid">
+        <div class="work-card glass">
+            <img src="images/d1.jpg" alt="3D Model Example" class="zoomable">
+            <h4>animation P.Ramlee</h4>
+        </div>
+        <div class="work-card glass">
+            <img src="images/d3.jpg" alt="3D Model Example" class="zoomable">
+            <h4>3D model</h4>
+        </div>
+        <div class="work-card glass">
+            <img src="images/d2.jpg" alt="3D Model Example" class="zoomable">
+            <h4>animation for kid</h4>
+        </div>
+    </div>
+
+    <!-- Unity Games / Interactive Projects -->
+    <h3 class="work-category"> Games / Interactive Projects</h3>
+    <div class="work-grid">
+        <div class="work-card glass">
+            <img src="images/g1.jpg" alt="Unity Game Example" class="zoomable">
+            <h4>Unity Game </h4>
+        </div>
+        <div class="work-card glass">
+            <img src="images/g2.jpg" alt="Unity Game Example" class="zoomable">
+            <h4>Unreal Game </h4>
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox overlay -->
+<div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <img class="lightbox-img" src="" alt="Zoomed Image">
+</div>
+
+
+
+    <!-- education -->
+    <section id="education" class="section reveal">
+        <h2 class="section-title">Education</h2>
+
+        <div class="edu-wrap">
+            <article class="edu-card glass reveal">
+                <div class="edu-top">
+                    <img src="images/utem_logo.png" alt="UTeM Logo" class="edu-logo-large">
+                    <div class="edu-info">
+                        <h3>Universiti Teknikal Malaysia Melaka (UTeM)</h3>
+                        <p class="muted">2023 — Present</p>
+                        <p class="muted">Multimedia • Current CGPA: <strong>3.71</strong></p>
+                    </div>
+                </div>
+                <p class="edu-desc">
+                    Coursework includes interactive media design, 3D modelling, animation pipelines, and user interface principles.
+                </p>
+            </article>
+
+            <article class="edu-card glass reveal">
+                <div class="edu-top">
+                    <img src="images/kmk_logo.jpg" alt="KMK Logo" class="edu-logo-large">
+                    <div class="edu-info">
+                        <h3>Kolej Matrikulasi Kedah (KMK)</h3>
+                        <p class="muted">2021 — 2023</p>
+                        <p class="muted">Sains Fizikal • CGPA: <strong>3.75</strong></p>
+                    </div>
+                </div>
+                <p class="edu-desc">
+                    Gained strong analytical foundations, leadership experience, and co-curricular involvement in scientific and academic projects.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <!-- achievements -->
+    <section id="achievements" class="section reveal">
+        <h2 class="section-title">Achievements & KOKO</h2>
+
+        <div class="timeline glass">
+            <div class="timeline-item">
+                <div class="year">2020</div>
+                <div class="event">
+                    <h4>Pengerusi Persatuan Doktor Muda</h4>
+                </div>
+                <div class="year"> </div>
+                <div class="event">
+                    <h4>Pengawas Sekolah</h4>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="year">2019</div>
+                <div class="event">
+                    <h4>Malaysia Future Leaders School (MFLS)
+                    <img src="images/mfls.png" class="timeline-icon" alt="MFLS Icon"></h4>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="year">2018</div>
+                <div class="event">
+                    <h4>Robotik — Mencipta Kereta Solar (Peringkat Negeri Kedah)</h4>
+                </div>
+                <div class="year"> </div>
+                <div class="event">
+                    <h4>Kangaroo Math Competition — Peringkat Kebangsaan
+                    <img src="images/kangaroo.png" class="timeline-icon" alt="Kangaroo Icon"></h4>
+                </div>
+                <div class="year"> </div>
+                <div class="event">
+                    <h4>Kancil Science Competition — Peringkat Kebangsaan
+                    <img src="images/kancil.png" class="timeline-icon" alt="Kancil Icon"></h4>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="year">2016</div>
+                <div class="event">
+                    <h4>Sijil Kenaikan Pangkat — Koperal (Kadet Remaja Sekolah)
+                    <img src="images/krs.png" class="timeline-icon" alt="KRS Icon"></h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- contact -->
+    <section id="contact" class="section reveal">
+        <h2 class="section-title">Contact</h2>
+
+        <div class="contact-grid">
+            <form id="contactForm" class="form glass">
+                <label for="name">Name</label>
+                <input id="name" type="text" placeholder="Your name">
+
+                <label for="email">Email</label>
+                <input id="email" type="email" placeholder="you@example.com">
+
+                <label for="message">Message</label>
+                <textarea id="message" placeholder="Write a short message"></textarea>
+
+                <div class="form-actions">
+                    <button type="button" class="btn primary" onclick="submitForm()">Send Message</button>
+                    <button type="button" class="btn ghost" onclick="resetForm()">Reset</button>
+                </div>
+            </form>
+
+            <aside class="contact-info glass">
+                <h3>Quick info</h3>
+                <p><strong>Location:</strong> Sungai Petani, Kedah</p>
+                <p><strong>Study:</strong> UTeM — Multimedia</p>
+                <p><strong>Interests:</strong> UI/UX, 3D Design, Unity, Digital Art</p>
+
+                <div class="socials">
+                    <a href="#" aria-label="Instagram">Instagram</a>
+                    <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- footer -->
+    <footer class="site-footer reveal">
+        <div>© <span id="year"></span> AmmarSite. All rights reserved.</div>
+        <div id="footer-date"></div>
+    </footer>
+
+</body>
+</html>
