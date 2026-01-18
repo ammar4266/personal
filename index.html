@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ammar's Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text-main: #000000; /* Solid Black for Headers */
+            --text-body: #050505; /* Solid Black for Body Text */
+            --text-muted: #4b5563; /* Only for very minor labels */
+            --accent-1: #4f46e5;
+            --accent-2: #06b6d4;
+            --accent-3: #ec4899;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-body); overflow-x: hidden; }
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; color: var(--text-main); }
+
+        /* --- BACKGROUND --- */
+        .bg-grid {
+            position: fixed; inset: 0; z-index: -2;
+            background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+            background-size: 50px 50px; opacity: 0.6;
+        }
+        .orb {
+            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; z-index: -1;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--accent-1); top: 10%; left: 20%; animation-delay: 0s; }
+        .orb-2 { width: 300px; height: 300px; background: var(--accent-2); top: 40%; right: 10%; animation-delay: -2s; }
+        .orb-3 { width: 350px; height: 350px; background: var(--accent-3); bottom: 10%; left: 30%; animation-delay: -4s; }
+        @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 50px); } }
+
+        /* --- NAV --- */
+        .nav-bar {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(15px);
+            padding: 8px 8px 8px 25px; border-radius: 100px; 
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex; gap: 30px; align-items: center; z-index: 100;
+        }
+        .nav-bar a { text-decoration: none; color: #444; font-size: 0.9rem; font-weight: 600; transition: 0.2s; }
+        .nav-bar a:hover, .nav-bar a.active { color: black; }
+        .logo { font-weight: 800; color: black; margin-right: auto; }
+        .contact-btn {
+            background: black; color: white !important; padding: 10px 24px; border-radius: 100px;
+            transition: transform 0.2s;
+        }
+        .contact-btn:hover { transform: scale(1.05); }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; padding-top: 60px;
+        }
+        .hero h1 {
+            font-size: clamp(3.5rem, 8vw, 7.5rem); line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 20px;
+            background: linear-gradient(to right, #000, #4f46e5, #000);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+
+        .hero p { 
+            font-size: 1.15rem; color: #000000; font-weight: 500; max-width: 700px; margin-bottom: 50px; line-height: 1.6;
+        }
+        .hero-title-tag {
+            font-weight: 700; color: var(--accent-1); display: block; margin-bottom: 10px; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        /* --- MARQUEE --- */
+        .marquee-container {
+            width: 100%; max-width: 1000px; overflow: hidden;
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            margin-bottom: 60px; padding: 20px 0;
+        }
+        .marquee-track { display: flex; gap: 30px; width: max-content; animation: scroll 25s linear infinite; }
+        .marquee-track:hover { animation-play-state: paused; }
+        .skill-pill {
+            display: flex; align-items: center; gap: 12px;
+            background: white; padding: 12px 24px; border-radius: 50px; 
+            border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-weight: 700; color: black; white-space: nowrap; transition: 0.3s;
+        }
+        .skill-pill img { height: 24px; width: auto; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 15px)); } }
+
+        /* --- SECTIONS --- */
+        .work-section { max-width: 1200px; margin: 0 auto 120px; padding: 0 20px; }
+        .section-header { margin-bottom: 40px; display: flex; align-items: baseline; justify-content: space-between; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        .section-header h2 { font-size: 2.2rem; }
+        .section-header span { font-weight: 600; color: var(--accent-1); text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
+
+        /* --- BENTO GRID (DEV) --- */
+        .bento-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+            grid-template-rows: 450px 350px; margin-bottom: 80px;
+        }
+        .card {
+            background: white; border-radius: 24px; overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.1); position: relative;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            text-decoration: none; color: inherit; display: flex; flex-direction: column;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05);
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px -15px rgba(0,0,0,0.15); }
+        
+        .card-main { grid-column: span 2; grid-row: span 2; }
+        .card-img { flex: 1; overflow: hidden; background: #f1f5f9; position: relative;}
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+        .card:hover .card-img img { transform: scale(1.06); }
+        
+        .card-info { padding: 30px; background: white; z-index: 2; position: relative; }
+        .card-info h3 { font-size: 1.6rem; margin-bottom: 8px; color: black; }
+        .card-info p { color: #111; font-size: 1rem; font-weight: 500; }
+        
+        .badge {
+            position: absolute; top: 20px; left: 20px; background: white; color: black;
+            padding: 6px 14px; border-radius: 30px; font-size: 0.8rem; font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 10;
+        }
+
+        /* --- DESIGN GRID (NEW) --- */
+        .design-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;
+        }
+        .design-card {
+            background: white; border-radius: 20px; overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.1); transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+        }
+        .design-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .design-img { height: 280px; background: #f8fafc; overflow: hidden; }
+        .design-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .design-card:hover .design-img img { transform: scale(1.05); }
+        .design-info { padding: 20px; text-align: center; }
+        .design-info h4 { font-size: 1.2rem; margin-bottom: 5px; color: black; }
+        .design-info span { font-size: 0.85rem; color: #555; font-weight: 600; text-transform: uppercase; }
+
+        @media (max-width: 900px) {
+            .bento-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+            .card-main { grid-column: span 1; height: 500px; }
+            .card { height: 400px; }
+            .nav-bar { width: 90%; justify-content: space-between; padding: 10px 20px;}
+            .nav-bar a:not(.logo):not(.contact-btn) { display: none; }
+        }
+        
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <nav class="nav-bar reveal">
+        <span class="logo">Ammar.</span>
+        <a href="index.html" class="active">Work</a>
+        <a href="about.html">Profile</a>
+        <a href="workshop2.html">Workshop 2</a>
+        <a href="contact.html" class="contact-btn">Contact</a>
+    </nav>
+
+    <header class="hero reveal">
+        <span class="hero-title-tag">Multimedia Student @ UTeM</span>
+        <h1>Ammar's Portfolio</h1>
+        <p>
+            Specializing in <strong>UI/UX</strong>, <strong>3D Art</strong>, <strong>Game Development</strong>, and <strong>Animation</strong>. 
+            Bridging the gap between creative art and technical systems. My technical arsenal includes:
+        </p>
+
+        <div class="marquee-container">
+            <div class="marquee-track">
+                <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unrealengine/unrealengine-original.svg" alt=""> Unreal Engine 5</div>
+                <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt=""> Unity (C#)</div>
+                <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg" alt=""> Blender</div>
+                <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt=""> C++ / OpenGL</div>
+                <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" alt=""> PHP & MySQL</div>
+                <div class="skill-pill"><span style="background: black; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">AI</span> Meshy AI</div>
+                <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unrealengine/unrealengine-original.svg" alt=""> Unreal Engine 5</div>
+                <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt=""> Unity (C#)</div>
+                <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg" alt=""> Blender</div>
+                <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt=""> C++ / OpenGL</div>
+                <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" alt=""> PHP & MySQL</div>
+                <div class="skill-pill"><span style="background: black; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">AI</span> Meshy AI</div>
+            </div>
+        </div>
+    </header>
+
+    <section class="work-section reveal">
+        <div class="section-header">
+            <h2>Development & 3D</h2>
+            <span>Featured Works</span>
+        </div>
+        <div class="bento-grid">
+            <a href="workshop2.html" class="card card-main">
+                <span class="badge">LATEST WORKSHOP</span>
+                <div class="card-img"><img src="images/ue5_editor.jpg" alt="UE5 Project"></div>
+                <div class="card-info">
+                    <h3>Re:Seniman — Virtual Production</h3>
+                    <p>A technical deep-dive: Migrating a traditional Blender animation pipeline to Real-Time Unreal Engine 5 for VR.</p>
+                </div>
+            </a>
+            <div class="card">
+                <div class="card-img"><img src="images/pollutiono.jpg" alt="Card Game"></div>
+                <div class="card-info"><h3>PollutioNO</h3><p>Strategic Card Game (Unity)</p></div>
+            </div>
+            <div class="card">
+                <div class="card-img"><img src="images/utem_model.jpg" alt="3D"></div>
+                <div class="card-info"><h3>UTeM Viz</h3><p>OpenGL & C++ Architecture</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="work-section reveal">
+        <div class="section-header">
+            <h2>Graphic Design & Merch</h2>
+            <span>Creative Suite</span>
+        </div>
+        <div class="design-grid">
+            
+            <div class="design-card">
+                <div class="design-img"><img src="images/design_poster.jpg" alt="Poster Design"></div>
+                <div class="design-info">
+                    <h4>Poster Art</h4>
+                    <span>Visual Composition</span>
+                </div>
+            </div>
+
+            <div class="design-card">
+                <div class="design-img"><img src="images/design_tshirt.jpg" alt="T-Shirt Design"></div>
+                <div class="design-info">
+                    <h4>Apparel Design</h4>
+                    <span>T-Shirt Printing</span>
+                </div>
+            </div>
+
+            <div class="design-card">
+                <div class="design-img"><img src="images/design_merch.jpg" alt="Button Badges"></div>
+                <div class="design-info">
+                    <h4>Merchandise</h4>
+                    <span>Buttons & Stickers</span>
+                </div>
+            </div>
+
+            <div class="design-card">
+                <div class="design-img"><img src="images/design_logo.jpg" alt="Logo Design"></div>
+                <div class="design-info">
+                    <h4>Identity</h4>
+                    <span>Logo Design</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
