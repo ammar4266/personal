@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop 2 | Virtual Production</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text-main: #000000;
+            --text-body: #050505;
+            --accent-1: #4f46e5; /* Indigo */
+            --accent-2: #06b6d4; /* Cyan */
+            --accent-3: #ec4899; /* Pink */
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-body); line-height: 1.7; overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; color: black; letter-spacing: -0.02em; }
+        html { scroll-behavior: smooth; }
+
+        /* --- BACKGROUND --- */
+        .bg-grid { position: fixed; inset: 0; z-index: -2; background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px); background-size: 50px 50px; opacity: 0.6; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; z-index: -1; animation: float 10s infinite alternate ease-in-out; }
+        .orb-1 { width: 500px; height: 500px; background: var(--accent-1); top: -10%; left: -10%; }
+        .orb-2 { width: 300px; height: 300px; background: var(--accent-2); top: 40%; right: -5%; }
+        .orb-3 { width: 400px; height: 400px; background: var(--accent-3); bottom: -10%; left: 20%; }
+        @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 50px); } }
+
+        /* --- HEADER --- */
+        .nav-bar { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.85); backdrop-filter: blur(15px); padding: 8px 8px 8px 25px; border-radius: 100px; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; gap: 30px; align-items: center; z-index: 100; }
+        .nav-bar a { text-decoration: none; color: #555; font-size: 0.9rem; font-weight: 600; transition: 0.2s; }
+        .nav-bar a:hover, .nav-bar a.active { color: black; }
+        .logo { font-weight: 800; color: black; margin-right: auto; }
+        .contact-btn { background: black; color: white !important; padding: 10px 24px; border-radius: 100px; }
+
+        /* --- LAYOUT --- */
+        .wrapper { display: grid; grid-template-columns: 380px 1fr; max-width: 1400px; margin: 0 auto; min-height: 100vh; }
+        .sidebar { position: sticky; top: 0; height: 100vh; padding: 120px 40px 40px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: flex-start; background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); overflow-y: auto; }
+        .project-label { font-size: 0.8rem; font-weight: 700; color: var(--accent-1); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; }
+        .sidebar h1 { font-size: 3rem; line-height: 1; margin-bottom: 20px; background: linear-gradient(135deg, black 0%, #4f46e5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sidebar p { color: black; font-weight: 500; font-size: 1.1rem; line-height: 1.6; }
+        
+        .toc { display: flex; flex-direction: column; gap: 15px; margin-top: 60px; }
+        .toc a { text-decoration: none; color: #555; font-weight: 600; transition: 0.2s; padding-left: 15px; border-left: 2px solid transparent; }
+        .toc a:hover, .toc a.active { color: var(--accent-1); border-left-color: var(--accent-1); }
+        .back-link { font-weight: 700; color: black; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+
+        .content { padding: 120px 80px; max-width: 950px; }
+        
+        /* --- COMPARISON STATS --- */
+        .stats-container { margin-bottom: 80px; }
+        .comparison-label { text-align: center; color: #555; font-weight: 600; margin-bottom: 30px; display: block; font-size: 1rem; }
+        .stats-bar { display: flex; gap: 30px; }
+        .stat { background: white; padding: 30px; border-radius: 20px; border: 1px solid var(--border); flex: 1; min-width: 200px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); position: relative; }
+        .stat.action { cursor: pointer; transition: all 0.3s ease; border: 1px solid #ddd; }
+        .stat.action:hover { transform: translateY(-5px); border-color: var(--accent-1); box-shadow: 0 15px 30px rgba(79, 70, 229, 0.15); }
+        .stat.action h3 { color: var(--accent-1); font-size: 2.8rem; margin-bottom: 5px; }
+        .stat h3 { font-size: 2.5rem; margin-bottom: 5px; line-height: 1; }
+        .stat span { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: block; color: black;}
+        .stat sub { font-size: 0.9rem; font-weight: 500; color: #666; display: block; margin-top: 5px; text-transform: none; letter-spacing: 0; line-height: 1.3;}
+        .stat.action::after { content: '▶ Watch Video'; position: absolute; bottom: 25px; right: 25px; font-size: 0.85rem; font-weight: 700; opacity: 0; transition: 0.3s; transform: translateX(-10px); color: var(--accent-1); }
+        .stat.action:hover::after { opacity: 1; transform: translateX(0); }
+
+        /* Typography */
+        .section { margin-bottom: 120px; scroll-margin-top: 100px; }
+        .section-num { color: var(--accent-2); font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 10px; }
+        h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        h4 { font-size: 1.4rem; margin: 40px 0 15px; font-weight: 700; color: black; border-left: 4px solid var(--accent-1); padding-left: 15px; }
+        p { margin-bottom: 20px; color: #000000; font-size: 1.05rem; font-weight: 450; }
+
+        /* Grids & Images */
+        .scroll-gallery { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory; }
+        .scroll-gallery::-webkit-scrollbar { height: 8px; }
+        .scroll-gallery::-webkit-scrollbar-thumb { background: var(--accent-1); border-radius: 4px; }
+        
+        .char-card { min-width: 280px; scroll-snap-align: start; background: white; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: 0.3s; }
+        .char-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .char-img { height: 350px; background: #f1f5f9; cursor: zoom-in; }
+        .char-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;}
+        .char-card:hover .char-img img { transform: scale(1.03); }
+        .char-name { padding: 15px; font-weight: 700; text-align: center; border-top: 1px solid var(--border); }
+
+        .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 30px 0; }
+        .process-item { text-align: center; }
+        .process-img { width: 100%; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 10px; cursor: zoom-in; }
+        .process-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .process-img:hover img { transform: scale(1.03); }
+        .process-label { font-size: 0.8rem; font-weight: 700; color: var(--accent-1); }
+
+        .img-box { width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); margin: 30px 0 10px; border: 1px solid rgba(0,0,0,0.05); background: white; cursor: zoom-in; }
+        .img-box img { width: 100%; display: block; transition: transform 0.5s; }
+        .img-box:hover img { transform: scale(1.02); }
+        .caption { font-size: 0.85rem; color: #555; text-align: center; display: block; margin-bottom: 40px; font-weight: 600; }
+
+        .tech-list li { margin-bottom: 12px; color: black; list-style: none; padding-left: 25px; position: relative; font-weight: 450; }
+        .tech-list li::before { content: "→"; color: var(--accent-1); font-weight: bold; position: absolute; left: 0; }
+        .tech-list strong { color: black; font-weight: 700; }
+
+        .comparison-box { background: linear-gradient(135deg, #f8fafc, #f1f5f9); border: 1px solid var(--border); border-radius: 24px; padding: 50px; margin-top: 50px; }
+        .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
+        .vs-col { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+        .vs-col p { font-size: 0.95rem; color: #555; margin-bottom: 5px; }
+
+        /* IN-LINE VIDEO PLAYER */
+        .video-container {
+            width: 100%; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid var(--border);
+            aspect-ratio: 16/9; background: black;
+        }
+        .video-container video { width: 100%; height: 100%; display: block; }
+
+        /* MODALS */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+        .modal-content { position: relative; }
+        .close { position: absolute; top: -40px; right: 0; font-size: 2.5rem; cursor: pointer; color: white; transition: 0.2s; z-index: 2001;}
+        .close:hover { color: var(--accent-2); }
+        
+        .youtube-card {
+            background: white; padding: 50px; border-radius: 24px;
+            text-align: center; max-width: 500px; width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .yt-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: #FF0000; color: white; padding: 16px 32px;
+            border-radius: 100px; font-weight: 700; text-decoration: none;
+            margin-top: 25px; font-size: 1.1rem; transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .yt-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3); }
+
+        .image-modal-content {
+            max-width: 95%; max-height: 95vh; object-fit: contain;
+            border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s ease;
+        }
+        @keyframes zoomIn { from {transform: scale(0.9); opacity: 0;} to {transform: scale(1); opacity: 1;} }
+
+        @media (max-width: 1000px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .sidebar { height: auto; padding: 100px 30px 40px; border-right: none; border-bottom: 1px solid var(--border); position: relative; top: 0; }
+            .content { padding: 60px 30px; }
+            .stats-bar { flex-direction: column; }
+            .process-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <nav class="nav-bar">
+        <span class="logo">Ammar.</span>
+        <a href="index.html">Work</a>
+        <a href="about.html">Profile</a>
+        <a href="workshop2.html" class="active">Workshop 2</a>
+        <a href="contact.html" class="contact-btn">Contact</a>
+    </nav>
+
+    <div class="wrapper">
+        <aside class="sidebar">
+            <div>
+                <a href="index.html" class="back-link">← Back to Home</a>
+                <div class="project-meta" style="margin-top: 60px;">
+                    <span class="project-label">Workshop 2</span>
+                    <h1>Virtual Production: Seniman</h1>
+                    <p>Recreating the legendary "Seniman Bujang Lapok" scene using Anime aesthetics and a Virtual Production pipeline in Unreal Engine 5.</p>
+                </div>
+                <nav class="toc">
+                    <a href="#preprod">01. Pre-Production & AI</a>
+                    <a href="#env">02. Environment</a>
+                    <a href="#prod">03. Production (Blender)</a>
+                    <a href="#post">04. Post-Production</a>
+                    <a href="#ue5">05. The Pivot (UE5)</a>
+                    <a href="#bts">06. Behind the Scenes</a>
+                    <a href="#exhibition">07. Exhibition Showcase</a>
+                </nav>
+            </div>
+            <div style="font-size: 0.8rem; color: #555; font-weight: 600;">© 2026 Ammar Portfolio</div>
+        </aside>
+
+        <main class="content">
+            
+            <div class="stats-container">
+                <span class="comparison-label">Comparable Visual Fidelity, Drastically Different Workflows.</span>
+                <div class="stats-bar">
+                    <div class="stat action" onclick="openYTModal()">
+                        <h3>3 Months</h3>
+                        <span>Blender Pipeline</span>
+                        <sub>Traditional Workflow & Rendering</sub>
+                    </div>
+                    <div class="stat action" onclick="openYTModal()">
+                        <h3>&lt; 1 Week</h3>
+                        <span>UE5 Pipeline</span>
+                        <sub>Migration & Real-Time Render</sub>
+                    </div>
+                </div>
+            </div>
+
+            <section id="preprod" class="section">
+                <div class="section-header"><span class="section-num">PHASE 01</span><h2>Concept & Hybrid AI Design</h2></div>
+                <p>The vision was ambitious: translate the live-action classic <em>Seniman Bujang Lapok</em> into a distinct <strong>Anime Art Style</strong>.</p>
+                <div class="process-grid">
+                    <div class="process-item"><div class="process-img"><img src="images/char_sketch.jpg" alt="Sketch"></div><span class="process-label">1. Paper Sketch</span></div>
+                    <div class="process-item"><div class="process-img"><img src="images/char_gemini.jpg" alt="Gemini"></div><span class="process-label">2. Gemini AI</span></div>
+                    <div class="process-item"><div class="process-img"><img src="images/char_model.jpg" alt="Blender"></div><span class="process-label">3. Blender Model</span></div>
+                </div>
+                <h4>The Cast</h4>
+                <div class="scroll-gallery">
+                    <div class="char-card"><div class="char-img"><img src="images/char_ramlee.jpg" alt="P. Ramlee"></div><div class="char-name">P. Ramlee</div></div>
+                    <div class="char-card"><div class="char-img"><img src="images/char_ajis.jpg" alt="Ajis"></div><div class="char-name">Ajis</div></div>
+                    <div class="char-card"><div class="char-img"><img src="images/char_sudin.jpg" alt="Sudin"></div><div class="char-name">Sudin</div></div>
+                    <div class="char-card"><div class="char-img"><img src="images/char_director.jpg" alt="Director"></div><div class="char-name">The Director</div></div>
+                    <div class="char-card"><div class="char-img"><img src="images/char_producer.jpg" alt="Producer"></div><div class="char-name">The Producer</div></div>
+                </div>
+            </section>
+
+            <section id="env" class="section">
+                <div class="section-header"><span class="section-num">PHASE 02</span><h2>Environment</h2></div>
+                <div class="process-grid">
+                    <div class="process-item"><div class="process-img"><img src="images/prop_clock.jpg" alt="Clock"></div><span class="process-label">Jam Besar</span></div>
+                    <div class="process-item"><div class="process-img"><img src="images/prop_chair.jpg" alt="Chair"></div><span class="process-label">Director's Chair</span></div>
+                    <div class="process-item"><div class="process-img"><img src="images/prop_curtains.jpg" alt="Curtains"></div><span class="process-label">Curtains</span></div>
+                </div>
+                <div class="img-box"><img src="images/environment_blender.jpg" alt="Full Set"></div>
+            </section>
+
+            <section id="prod" class="section">
+                <div class="section-header"><span class="section-num">PHASE 03</span><h2>Production</h2></div>
+                <div class="img-box"><img src="images/blender_retarget.jpg" alt="Retargeting"></div>
+                <div class="img-box"><img src="images/blender_viewport.jpg" alt="Viewport"></div>
+            </section>
+
+            <section id="post" class="section">
+                <div class="section-header"><span class="section-num">PHASE 04</span><h2>Post-Production</h2></div>
+                <p>Assembly in **Blender VSE**, grading in **Premiere Pro**.</p>
+                <div class="img-box"><img src="images/premiere_timeline.jpg" alt="Timeline"></div>
+            </section>
+
+            <section id="ue5" class="section">
+                <div class="section-header"><span class="section-num">PHASE 05</span><h2>The Pivot: Unreal Engine 5</h2></div>
+                <div class="process-grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="process-item"><div class="process-img"><img src="images/ue5_sequencer.jpg" alt="Sequencer"></div><span class="process-label">Level Sequencer</span></div>
+                    <div class="process-item"><div class="process-img"><img src="images/vr_view.jpg" alt="VR"></div><span class="process-label">VR Integration</span></div>
+                </div>
+                
+                <div class="comparison-box">
+                    <h3 style="text-align: center; margin-bottom: 40px;">Pipeline Breakdown</h3>
+                    <div class="vs-grid">
+                        <div class="vs-col">
+                            <h4 style="color: #ef4444;">Blender (3 Months)</h4>
+                            <p>• Modeling & Texturing (Manual)</p>
+                            <p>• Rigging & Retargeting</p>
+                            <p>• Offline Rendering (Eevee)</p>
+                            <p>• Image Sequence Export</p>
+                        </div>
+                        <div class="vs-col" style="border: 2px solid var(--accent-1);">
+                            <h4 style="color: var(--accent-1);">Unreal Engine 5 (1 Week)</h4>
+                            <p>• FBX/Alembic Migration</p>
+                            <p>• Lumen Lighting Setup</p>
+                            <p>• Level Sequencer Assembly</p>
+                            <p>• Real-Time 4K Render</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="bts" class="section">
+                <div class="section-header">
+                    <span class="section-num">PHASE 06</span>
+                    <h2>Behind the Scenes</h2>
+                </div>
+                <p>Workflow in action: Manually refining raw motion capture data to ensure fluid movement, followed by real-time VR integration of the short film in Unreal Engine 5.</p>
+                
+                <div class="process-grid" style="grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div class="process-item">
+                        <div class="video-container">
+                            <video controls poster="images/thumb_pov.jpg" preload="none">
+                                <source src="images/bts_pov.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <span class="caption" style="margin-top: 15px;">POV: The Animator</span>
+                    </div>
+                    
+                    <div class="process-item">
+                        <div class="video-container">
+                            <video controls poster="images/thumb_vr.jpg" preload="none">
+                                <source src="images/bts_vr.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <span class="caption" style="margin-top: 15px;">VP: VR Integration</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="exhibition" class="section">
+                <div class="section-header"><span class="section-num">PHASE 07</span><h2>Exhibition Showcase</h2></div>
+                <div class="process-grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="process-item"><div class="img-box" style="margin:0;"><img src="images/exhibition_anim.jpg" alt="Animation"></div></div>
+                    <div class="process-item"><div class="img-box" style="margin:0;"><img src="images/exhibition_vr.jpg" alt="VR"></div></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="ytModal" class="modal" style="display: none;">
+        <div class="modal-content youtube-card">
+            <span class="close" id="closeYT">&times;</span>
+            <h2 style="font-size: 2rem; margin-bottom: 10px; color: black;">Ready to Watch?</h2>
+            <p style="color: #555; font-size: 1.1rem;">Experience the full "Re:Seniman" short film directly on YouTube.</p>
+            <a href="https://www.youtube.com/watch?v=jsxPUbRRsPA" target="_blank" class="yt-btn"><span style="font-size: 1.5rem;">▶</span> Watch on YouTube</a>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal" style="display: none; align-items: center; justify-content: center;">
+        <span class="close" id="closeImage" style="z-index: 2002;">&times;</span>
+        <img class="image-modal-content" id="modalImg" src="">
+    </div>
+
+    <script>
+        // --- YOUTUBE MODAL ---
+        const ytModal = document.getElementById('ytModal');
+        const closeYTBtn = document.getElementById('closeYT');
+        function openYTModal() { ytModal.style.display = 'flex'; }
+        closeYTBtn.onclick = function() { ytModal.style.display = 'none'; }
+
+        // --- IMAGE MODAL ---
+        const imageModal = document.getElementById('imageModal');
+        const modalImgElem = document.getElementById('modalImg');
+        const closeImageBtn = document.getElementById('closeImage');
+        const zoomableImages = document.querySelectorAll('.img-box img, .process-img img, .char-img img');
+
+        zoomableImages.forEach(img => {
+            img.onclick = function(){
+                imageModal.style.display = "flex";
+                modalImgElem.src = this.src;
+            }
+        });
+        closeImageBtn.onclick = function() { imageModal.style.display = "none"; }
+
+        // --- GLOBAL CLOSE ---
+        window.onclick = function(e) {
+            if(e.target == ytModal) ytModal.style.display = 'none';
+            if(e.target == imageModal) imageModal.style.display = "none";
+        }
+
+        // --- SCROLL HIGHLIGHT ---
+        const sections = document.querySelectorAll('section');
+        const navLi = document.querySelectorAll('.toc a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) current = section.getAttribute('id');
+            });
+            navLi.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href').includes(current)) a.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Ammar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text-main: #000000;
+            --text-body: #050505;
+            --text-muted: #555555;
+            --accent-1: #4f46e5;
+            --accent-2: #06b6d4;
+            --accent-3: #ec4899;
+            --border: #e2e8f0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-body); line-height: 1.7; overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; color: black; letter-spacing: -0.02em; }
+        html { scroll-behavior: smooth; }
+
+        /* --- BACKGROUND --- */
+        .bg-grid { position: fixed; inset: 0; z-index: -2; background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px); background-size: 50px 50px; opacity: 0.6; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; z-index: -1; animation: float 10s infinite alternate ease-in-out; }
+        .orb-1 { width: 400px; height: 400px; background: var(--accent-1); top: 10%; left: 20%; }
+        .orb-2 { width: 300px; height: 300px; background: var(--accent-2); top: 40%; right: 10%; }
+        .orb-3 { width: 350px; height: 350px; background: var(--accent-3); bottom: 10%; left: 30%; }
+        @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 50px); } }
+
+        /* --- NAV --- */
+        .nav-bar { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.85); backdrop-filter: blur(15px); padding: 8px 8px 8px 25px; border-radius: 100px; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; gap: 30px; align-items: center; z-index: 100; }
+        .nav-bar a { text-decoration: none; color: #555; font-size: 0.9rem; font-weight: 600; transition: 0.2s; }
+        .nav-bar a:hover, .nav-bar a.active { color: black; }
+        .logo { font-weight: 800; color: black; margin-right: auto; }
+        .contact-btn { background: black; color: white !important; padding: 10px 24px; border-radius: 100px; }
+
+        /* --- LAYOUT --- */
+        .wrapper { display: grid; grid-template-columns: 350px 1fr; max-width: 1400px; margin: 100px auto 0; min-height: 100vh; }
+        
+        /* SIDEBAR (UPDATED FOR SCROLLING) */
+        .sidebar { 
+            position: sticky; 
+            top: 100px; 
+            height: calc(100vh - 100px); /* Fill remaining height */
+            padding: 40px; 
+            border-right: 1px solid var(--border); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-start; 
+            background: rgba(255,255,255,0.5); 
+            backdrop-filter: blur(5px); 
+            overflow-y: auto; /* ALLOWS SCROLLING INSIDE SIDEBAR */
+        }
+        
+        /* Custom Scrollbar for Sidebar */
+        .sidebar::-webkit-scrollbar { width: 6px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background-color: #d1d5db; border-radius: 20px; }
+        
+        .sidebar-profile-img {
+            width: 150px; height: 150px; border-radius: 50%; object-fit: cover;
+            border: 4px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 25px; flex-shrink: 0; /* Prevents image squishing */
+        }
+
+        .sidebar h1 { font-size: 3rem; line-height: 1.1; margin-bottom: 10px; }
+        .sidebar p { color: black; font-size: 1.1rem; }
+        
+        .toc { display: flex; flex-direction: column; gap: 15px; margin-top: 40px; padding-bottom: 40px; }
+        .toc a { text-decoration: none; color: #666; font-weight: 500; transition: 0.2s; padding-left: 15px; border-left: 2px solid transparent; }
+        .toc a:hover, .toc a.active { color: var(--accent-1); border-left-color: var(--accent-1); font-weight: 700; color: black;}
+
+        /* CONTENT */
+        .content { padding: 60px 80px; max-width: 900px; }
+        .section { margin-bottom: 100px; scroll-margin-top: 120px; }
+        .label { color: var(--accent-1); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 10px; display: block; letter-spacing: 1px; }
+        h2 { font-size: 2.2rem; margin-bottom: 30px; color: black; }
+
+        .glass-card { background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border-radius: 24px; padding: 40px; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 30px 60px -15px rgba(0,0,0,0.1); }
+        p { font-size: 1.1rem; color: #000000; font-weight: 450; }
+
+        .edu-item { display: flex; gap: 20px; align-items: center; padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+        .edu-item:last-child { border: none; padding-bottom: 0; margin-bottom: 0; }
+        .edu-logo { width: 70px; height: 70px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid var(--border); padding: 5px;}
+        .edu-logo img { width: 100%; height: 100%; object-fit: contain; } 
+        .edu-info h4 { margin-bottom: 5px; font-size: 1.2rem; color: black; }
+        .edu-info p { color: #111; font-size: 0.95rem; margin: 0; }
+
+        .skills-grid { display: flex; flex-wrap: wrap; gap: 15px; }
+        .skill-pill { display: flex; align-items: center; gap: 10px; background: white; padding: 10px 20px; border-radius: 50px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-weight: 700; color: black; font-size: 0.9rem; transition: 0.3s; }
+        .skill-pill:hover { transform: translateY(-3px); border-color: var(--accent-1); }
+        .skill-pill img { height: 20px; width: auto; }
+
+        .timeline { border-left: 2px solid var(--border); padding-left: 30px; margin-left: 10px; }
+        .timeline-item { position: relative; margin-bottom: 40px; }
+        .timeline-item::before { content: ''; position: absolute; left: -36px; top: 5px; width: 14px; height: 14px; background: var(--accent-1); border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); }
+        .timeline-date { font-size: 0.9rem; color: #555; font-weight: 600; margin-bottom: 5px; }
+        .timeline-item h4 { font-size: 1.3rem; margin-bottom: 10px; color: black; }
+        .timeline-item p { color: #000; font-size: 1rem; }
+
+        .toolbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 20px; text-align: center; }
+        .tool-item { background: white; padding: 20px; border-radius: 16px; border: 1px solid var(--border); transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .tool-item:hover { transform: translateY(-5px); border-color: var(--accent-2); }
+        .tool-item img { width: 40px; height: 40px; }
+        .tool-item span { font-size: 0.8rem; font-weight: 600; color: black; }
+
+        .cta-box { text-align: center; padding: 60px; background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); color: white; border-radius: 24px; }
+        .cta-box h2 { color: white; margin-bottom: 20px; }
+        .cta-btn { display: inline-block; background: white; color: var(--accent-1); padding: 15px 30px; border-radius: 100px; font-weight: 700; text-decoration: none; transition: 0.3s; }
+        .cta-btn:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+        @media (max-width: 900px) {
+            .wrapper { grid-template-columns: 1fr; margin-top: 80px; }
+            .sidebar { height: auto; padding: 40px 20px; border-right: none; border-bottom: 1px solid var(--border); position: relative; top: 0; align-items: center; text-align: center; overflow-y: visible;}
+            .content { padding: 40px 20px; }
+            .nav-bar { width: 90%; justify-content: space-between; padding: 10px 20px;}
+            .nav-bar a:not(.logo):not(.contact-btn) { display: none; }
+        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <nav class="nav-bar reveal">
+        <span class="logo">Ammar.</span>
+        <a href="index.html">Work</a>
+        <a href="about.html" class="active">Profile</a>
+        <a href="workshop2.html">Workshop 2</a>
+        <a href="contact.html" class="contact-btn">Contact</a>
+    </nav>
+
+    <div class="wrapper">
+        <aside class="sidebar reveal">
+            <img src="images/ammar_profile.jpg" alt="Ammar Syaril" class="sidebar-profile-img">
+            
+            <div>
+                <span class="label">Profile</span>
+                <h1>Ammar Syaril</h1>
+                <p>Multimedia Student, 3D Artist, and Game Developer based in Malaysia.</p>
+            </div>
+            <nav class="toc">
+                <a href="#bio" class="active">01. Biography</a>
+                <a href="#education">02. Education</a>
+                <a href="#skills">03. Technical Stack</a>
+                <a href="#experience">04. Experience</a>
+                <a href="#toolbox">05. My Toolbox</a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            
+            <section id="bio" class="section reveal">
+                <span class="label">01 — Biography</span>
+                <h2>The Intersection of Art & Code</h2>
+                <div class="glass-card">
+                    <p>I am a final-year Multimedia student at <strong>Universiti Teknikal Malaysia Melaka (UTeM)</strong>, with a deep passion for bridging the gap between technical programming and creative arts.</p>
+                    <p>My journey has been a rigorous exploration of <strong>Game Engines</strong> (Unreal Engine 5, Unity), complex <strong>3D pipelines</strong> in Blender, and <strong>Full-Stack Web Development</strong>. I thrive on challenges that require both a creative eye and a logical mind, always seeking to build immersive and functional digital experiences.</p>
+                </div>
+            </section>
+
+            <section id="education" class="section reveal">
+                <span class="label">02 — Education</span>
+                <h2>Academic Background</h2>
+                <div class="glass-card">
+                    <div class="edu-item">
+                        <div class="edu-logo"><img src="images/utem_logo.png" alt="UTeM Logo"></div>
+                        <div class="edu-info">
+                            <h4>Universiti Teknikal Malaysia Melaka (UTeM)</h4>
+                            <p>Bachelor of Computer Science (Interactive Media)<br>2023 — Present | <strong>CGPA: 3.71</strong></p>
+                        </div>
+                    </div>
+                    <div class="edu-item">
+                        <div class="edu-logo"><img src="images/kmk_logo.png" alt="KMK Logo"></div>
+                        <div class="edu-info">
+                            <h4>Kolej Matrikulasi Kedah</h4>
+                            <p>Physical Science Stream<br>2021 — 2023 | <strong>CGPA: 3.75</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills" class="section reveal">
+                <span class="label">03 — Technical Stack</span>
+                <h2>Core Competencies</h2>
+                <div class="skills-grid">
+                    <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unrealengine/unrealengine-original.svg" alt=""> Unreal Engine 5</div>
+                    <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt=""> Unity (C#)</div>
+                    <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg" alt=""> Blender 3D</div>
+                    <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt=""> C++ / OpenGL</div>
+                    <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" alt=""> PHP & MySQL</div>
+                    <div class="skill-pill"><span style="background: black; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">AI</span> Meshy AI</div>
+                </div>
+            </section>
+
+            <section id="experience" class="section reveal">
+                <span class="label">04 — Experience</span>
+                <h2>My Journey So Far</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024 — Present</div>
+                        <h4>Workshop II: Virtual Production Leader</h4>
+                        <p>Led a team to produce a 7-minute animated short, "Re:Seniman," pioneering a Blender-to-UE5 real-time rendering pipeline.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2023</div>
+                        <h4>PollutioNO Game Developer</h4>
+                        <p>Developed a strategic card game in Unity (C#) focused on environmental awareness, handling all core mechanics and UI.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2023</div>
+                        <h4>UTeM 3D Visualization Project</h4>
+                        <p>Programmed a 3D architectural visualization of university buildings using raw C++ and OpenGL.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="toolbox" class="section reveal">
+                <span class="label">05 — My Toolbox</span>
+                <h2>Software & Hardware</h2>
+                <div class="toolbox-grid">
+                    <div class="tool-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code"><span>VS Code</span></div>
+                    <div class="tool-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git"><span>Git</span></div>
+                    <div class="tool-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/premierepro/premierepro-original.svg" alt="Premiere Pro"><span>Premiere</span></div>
+                    <div class="tool-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" alt="Photoshop"><span>Photoshop</span></div>
+                    <div class="tool-item"><span style="font-size: 1.5rem;">🎥</span><span>Sony Mocopi</span></div>
+                    <div class="tool-item"><span style="font-size: 1.5rem;">🥽</span><span>VR Headset</span></div>
+                </div>
+            </section>
+
+            <section class="section reveal">
+                <div class="cta-box">
+                    <h2>Let's Build Something Amazing Together.</h2>
+                    <p style="color: rgba(255,255,255,0.9); margin-bottom: 30px; font-weight: 500;">Open for internships, collaborations, and freelance projects.</p>
+                    <a href="contact.html" class="cta-btn">Get in Touch</a>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        const sections = document.querySelectorAll('section');
+        const navLi = document.querySelectorAll('.toc a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) current = section.getAttribute('id');
+            });
+            navLi.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href').includes(current)) a.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
